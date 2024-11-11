@@ -31,7 +31,7 @@ drag_bottom_margin = 1.0
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(2000, 512)
+size = Vector2i(30000, 512)
 render_target_update_mode = 4
 
 [node name="Node2D" type="Node2D" parent="SubViewportContainer/SubViewport"]
