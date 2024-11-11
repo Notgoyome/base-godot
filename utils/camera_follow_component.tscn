@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://ch6ys1ltulvmy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5v4ol"]
+size = Vector2(338, 194)
+
+[node name="CameraFollowComponent" type="Area2D"]
+position = Vector2(168, 112)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_5v4ol")
+debug_color = Color(0, 0.6, 0.701961, 0.0901961)

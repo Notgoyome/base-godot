@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://r1uhe0nyxj1p"]
+
+[ext_resource type="Script" path="res://entities/Components/Attack/attack_component.gd" id="1_yyhfp"]
+[ext_resource type="Script" path="res://entities/Components/Attack/area_2d.gd" id="2_87ioe"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gavnn"]
+size = Vector2(16, 24)
+
+[node name="AttackComponent" type="Node2D" node_paths=PackedStringArray("player")]
+script = ExtResource("1_yyhfp")
+player = NodePath("")
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("2_87ioe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_gavnn")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

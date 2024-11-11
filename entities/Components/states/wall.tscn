@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bwjsgrs4i7cfy"]
+
+[ext_resource type="Script" path="res://entities/player/states/wall.gd" id="1_qui2d"]
+
+[node name="Wall" type="Node" node_paths=PackedStringArray("player")]
+script = ExtResource("1_qui2d")
+player = NodePath("")

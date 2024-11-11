@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8j35ts1d65lq"]
+
+[ext_resource type="Script" path="res://entities/player/cell_getter/cell_getter_component.gd" id="1_012pn"]
+
+[node name="TileDataDetectorComponent" type="Node2D"]
+position = Vector2(0, 8)
+script = ExtResource("1_012pn")
+tile_data = null

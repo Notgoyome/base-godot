@@ -1,14 +1,22 @@
-[gd_scene load_steps=36 format=3 uid="uid://bsyrub6n7x3r6"]
+[gd_scene load_steps=43 format=3 uid="uid://bsyrub6n7x3r6"]
 
 [ext_resource type="Texture2D" uid="uid://3fuskiuyg44w" path="res://entities/player/animation/idle.png" id="1_hx2eg"]
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_t02a2"]
+[ext_resource type="Texture2D" uid="uid://bhueg8gerjj3o" path="res://entities/player/animation/climbing.png" id="2_usyo3"]
 [ext_resource type="Texture2D" uid="uid://dqrxrd2ua6vkm" path="res://entities/player/animation/player_jump.png" id="3_14d88"]
 [ext_resource type="PackedScene" uid="uid://04dv3vyfoymm" path="res://entities/Components/states/state_machine.tscn" id="3_e1sw7"]
 [ext_resource type="Texture2D" uid="uid://cdr6ltf4tbtd6" path="res://entities/player/animation/run.png" id="3_gvg8i"]
 [ext_resource type="Script" path="res://entities/player/states/ground.gd" id="4_yhv1i"]
 [ext_resource type="Script" path="res://entities/player/states/air.gd" id="5_7d0ht"]
-[ext_resource type="Script" path="res://entities/player/states/catch.gd" id="8_5vdrf"]
+[ext_resource type="PackedScene" uid="uid://bwjsgrs4i7cfy" path="res://entities/Components/states/wall.tscn" id="8_fblcq"]
 [ext_resource type="PackedScene" uid="uid://cifsc3fj43ga2" path="res://entities/Components/jumpbuffer/jump_buffer_component.tscn" id="8_kaa7x"]
+[ext_resource type="Script" path="res://entities/player/states/climbing.gd" id="9_1ql2k"]
+[ext_resource type="Script" path="res://entities/player/room_detector.gd" id="12_335rw"]
+[ext_resource type="Script" path="res://entities/player/collision_component.gd" id="12_ipx2p"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ac75i"]
+atlas = ExtResource("2_usyo3")
+region = Rect2(0, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4udml"]
 atlas = ExtResource("3_14d88")
@@ -110,6 +118,14 @@ region = Rect2(336, 0, 48, 48)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_ac75i")
+}],
+"loop": true,
+"name": &"climb",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_4udml")
 }, {
 "duration": 1.0,
@@ -202,17 +218,29 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s3edx"]
-size = Vector2(17, 29)
+size = Vector2(18, 28)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7wo3y"]
+size = Vector2(8, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ea81b"]
+size = Vector2(0, 0)
 
 [node name="Player" type="CharacterBody2D"]
+scale = Vector2(0.5, 0.5)
+safe_margin = 0.1
 script = ExtResource("1_t02a2")
+friction = 300
+max_speed = 50
+jump_time = 0.1
+fall_time = 0.1
 
 [node name="Animation" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_wqnge")
-animation = &"fall"
+animation = &"run"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1.5, 1.5)
+position = Vector2(-1, 2)
 shape = SubResource("RectangleShape2D_s3edx")
 
 [node name="StateMachine" parent="." node_paths=PackedStringArray("initial_state") instance=ExtResource("3_e1sw7")]
@@ -226,10 +254,31 @@ player = NodePath("../..")
 script = ExtResource("5_7d0ht")
 player = NodePath("../..")
 
-[node name="Catch" type="Node" parent="StateMachine"]
-script = ExtResource("8_5vdrf")
+[node name="Wall" parent="StateMachine" node_paths=PackedStringArray("player") instance=ExtResource("8_fblcq")]
+player = NodePath("../..")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.6, 0.6)
+[node name="Climbing" type="Node" parent="StateMachine" node_paths=PackedStringArray("player")]
+script = ExtResource("9_1ql2k")
+player = NodePath("../..")
 
 [node name="JumpBufferComponent" parent="." instance=ExtResource("8_kaa7x")]
+
+[node name="CollisionComponent" type="Area2D" parent="." node_paths=PackedStringArray("player")]
+position = Vector2(4, 0)
+script = ExtResource("12_ipx2p")
+player = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionComponent"]
+position = Vector2(-4, -8)
+shape = SubResource("RectangleShape2D_7wo3y")
+
+[node name="RoomDetector" type="Area2D" parent="."]
+script = ExtResource("12_335rw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RoomDetector"]
+shape = SubResource("RectangleShape2D_ea81b")
+
+[connection signal="area_entered" from="CollisionComponent" to="CollisionComponent" method="_on_area_entered"]
+[connection signal="area_exited" from="CollisionComponent" to="CollisionComponent" method="_on_area_exited"]
+[connection signal="body_entered" from="CollisionComponent" to="CollisionComponent" method="_on_body_entered"]
+[connection signal="area_entered" from="RoomDetector" to="RoomDetector" method="_on_area_entered"]
