@@ -28,6 +28,7 @@ func exit() -> void:
 	player.has_gravity = true
 	player.can_jump = false
 	player.actual_max_speed = player.max_speed
+	print(player.max_speed)
 	player.velocity.x = player.input_vector.x * player.actual_max_speed * 1.2
 	player.can_move = true
 

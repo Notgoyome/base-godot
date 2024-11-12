@@ -24,7 +24,8 @@ func enter() -> void:
 	update_animation()
 
 func process(delta: float) -> void:
-	if player.can_climb and player.request_climb and player.climb_stamina > 0:
+	if player.can_climb and player.request_climb and int(player.climb_stamina) > 0:
+		print("go", player.climb_stamina)
 		emit_signal("state_finished", self, "climbing")
 		return
 	if player.is_on_floor():

@@ -9,7 +9,7 @@ func enter() -> void:
 	player.friction = 800
 	player.acceleration = 1200
 	player.can_jump = true
-	player.climb_stamina = 100
+	player.climb_stamina = player.max_climb_stamina
 	on_floor.emit()
 	pass
 

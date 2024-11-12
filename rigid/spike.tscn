@@ -1,12 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://ersdgygcyhie"]
+[gd_scene load_steps=4 format=3 uid="uid://ersdgygcyhie"]
 
 [ext_resource type="Script" path="res://rigid/spike.gd" id="1_r4kti"]
 [ext_resource type="Texture2D" uid="uid://8si70ygdc3e0" path="res://assets/spike.png" id="2_3bs2p"]
-[ext_resource type="Script" path="res://utils/player_detector.gd" id="3_qwxcu"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rhn2d"]
-resource_local_to_scene = true
-size = Vector2(8, 3)
+[ext_resource type="PackedScene" uid="uid://dogthltcnehvs" path="res://utils/player_detector.tscn" id="3_0tr4u"]
 
 [node name="Spike" type="Node2D"]
 script = ExtResource("1_r4kti")
@@ -19,12 +15,6 @@ region_rect = Rect2(0, 0, 8, 8)
 axis_stretch_horizontal = 2
 axis_stretch_vertical = 2
 
-[node name="PlayerDetector" type="Area2D" parent="."]
-script = ExtResource("3_qwxcu")
+[node name="PlayerDetector" parent="." instance=ExtResource("3_0tr4u")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector"]
-position = Vector2(4, 6.5)
-shape = SubResource("RectangleShape2D_rhn2d")
-
-[connection signal="body_entered" from="PlayerDetector" to="PlayerDetector" method="_on_body_entered"]
 [connection signal="player_detected" from="PlayerDetector" to="." method="_on_player_detector_player_detected"]

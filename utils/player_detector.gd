@@ -1,6 +1,6 @@
 extends Area2D
 
-signal player_detected(body:Node2D)
+signal player_detected(body:Player)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

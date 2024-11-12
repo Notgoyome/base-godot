@@ -226,14 +226,11 @@ size = Vector2(8, 8)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ea81b"]
 size = Vector2(0, 0)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 scale = Vector2(0.5, 0.5)
 safe_margin = 0.1
 script = ExtResource("1_t02a2")
-friction = 300
-max_speed = 50
-jump_time = 0.1
-fall_time = 0.1
+fall_time = 0.2
 
 [node name="Animation" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_wqnge")

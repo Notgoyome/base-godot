@@ -83,6 +83,10 @@ climb={
 
 2d_physics/layer_2="climbable"
 
+[physics]
+
+3d/default_gravity=4.0
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

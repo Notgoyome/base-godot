@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://bs2isa3v438qd"]
+
+[ext_resource type="PackedScene" uid="uid://bsyrub6n7x3r6" path="res://entities/player/player.tscn" id="1_ruh2t"]
+[ext_resource type="Script" path="res://entities/player/stamina_debug.gd" id="2_wmrn7"]
+
+[node name="Room" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_ruh2t")]
+position = Vector2(48, 104)
+collision_layer = 3
+jump_time = 0.6
+fall_time = 0.5
+
+[node name="stamina_debug" type="Label" parent="Player"]
+offset_left = -24.0
+offset_top = -40.0
+offset_right = 16.0
+offset_bottom = -17.0
+script = ExtResource("2_wmrn7")
+metadata/_edit_use_anchors_ = true

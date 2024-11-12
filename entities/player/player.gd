@@ -5,8 +5,8 @@ class_name Player
 # movement
 @export var acceleration = 300
 @export var friction = 500
-@export var max_speed = 80
-var actual_max_speed = max_speed
+@export var max_speed = 100
+var actual_max_speed = 0
 
 var can_move = true
 var has_acceleration = true
@@ -30,13 +30,18 @@ var is_falling = false
 var can_climb = false
 var request_climb = false
 var hold : Hold = null
-@export var climb_stamina = 100.0
+@export var max_climb_stamina = 100.0
+var climb_stamina = 100.0
 
 # animation
 @onready var animated_sprite: AnimatedSprite2D = $Animation
 
 #jump buffer
 @onready var jump_buffer : JumpBufferComponent = $JumpBufferComponent
+
+func _ready() -> void:
+	actual_max_speed = max_speed
+	pass
 
 # Main physics process
 func _physics_process(delta: float) -> void: ### SKOTCH !!! SEPARER LES FONCTIONS EN COMPONENTS
