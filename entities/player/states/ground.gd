@@ -6,7 +6,7 @@ signal on_floor
 func enter() -> void:
 	player.has_acceleration = true
 	player.has_friction = true
-	player.friction = 800
+	player.friction = player.ground_friction
 	player.acceleration = 1200
 	player.can_jump = true
 	player.climb_stamina = player.max_climb_stamina

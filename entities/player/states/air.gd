@@ -14,7 +14,9 @@ func _ready():
 func enter() -> void:
 	# player.has_friction = false
 	# player.has_acceleration = false
-	player.friction = 100
+	player.friction = player.air_friction
+	print(player.air_friction)
+	player.has_friction = true
 	# player.acceleration = 750
 	old_speed = player.max_speed
 	player.max_speed = player.max_speed
@@ -24,6 +26,7 @@ func enter() -> void:
 	update_animation()
 
 func process(delta: float) -> void:
+	print(player.has_friction)
 	if player.can_climb and player.request_climb and int(player.climb_stamina) > 0:
 		print("go", player.climb_stamina)
 		emit_signal("state_finished", self, "climbing")

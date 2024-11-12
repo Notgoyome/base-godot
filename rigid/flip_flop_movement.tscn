@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://bxtnsmnp5xkl8"]
+
+[ext_resource type="Texture2D" uid="uid://dyvmxsgpma7xq" path="res://assets/fallable.png" id="1_s2gly"]
+
+[sub_resource type="GDScript" id="GDScript_xgsn5"]
+script/source = "extends AnimatableBody2D
+class_name TriggerMove
+var velocity = Vector2i(200, 0)
+var enabled = false
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	
+	pass # Replace with function body.
+
+func trigger():
+	enabled = true
+
+# Called every frame. 'delta' is the elapsed time since the previous frame                      .
+func _process(delta):
+	pass
+	
+func _physics_process(delta):
+
+
+	if enabled:
+		var collision = move_and_collide(velocity * delta)
+
+		if collision is Player:
+			print(\"col\")
+
+func _on_area_2d_body_entered(body):
+	if body is TileMapLayer:
+		velocity = Vector2(0,0)
+	if body is Player:
+		print(\"PLAYER !!\")
+	pass # Replace with function body.
+
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ap566"]
+size = Vector2(16, 16)
+
+[node name="AnimatableBody2D" type="AnimatableBody2D"]
+position = Vector2(76, 130)
+collision_layer = 3
+collision_mask = 3
+sync_to_physics = false
+script = SubResource("GDScript_xgsn5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, -1)
+shape = SubResource("RectangleShape2D_ap566")
+
+[node name="Fallable" type="Sprite2D" parent="."]
+position = Vector2(2, -1)
+texture = ExtResource("1_s2gly")

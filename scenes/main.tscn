@@ -19,12 +19,12 @@ extends Node2D
 
 [node name="Node2D" type="Node2D"]
 
+[node name="Camera2D2" parent="." instance=ExtResource("11_vxfe0")]
+
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 texture_filter = 1
 offset_right = 322.0
 offset_bottom = 182.0
-
-[node name="Camera2D2" parent="SubViewportContainer" instance=ExtResource("11_vxfe0")]
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 handle_input_locally = false

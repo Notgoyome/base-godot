@@ -230,7 +230,10 @@ size = Vector2(0, 0)
 scale = Vector2(0.5, 0.5)
 safe_margin = 0.1
 script = ExtResource("1_t02a2")
-fall_time = 0.2
+friction = 100
+air_friction = 400
+ground_friction = 1200
+fall_time = 0.1
 
 [node name="Animation" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_wqnge")
