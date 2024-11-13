@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="sound of echoes"
-run/main_scene="res://scenes/main.tscn"
+run/main_scene="res://scenes/main2.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 
 [autoload]
@@ -82,6 +82,10 @@ climb={
 [layer_names]
 
 2d_physics/layer_2="climbable"
+
+[physics]
+
+3d/default_gravity=4.0
 
 [rendering]
 

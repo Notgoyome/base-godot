@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hxcxh"]
 size = Vector2(20, 98.5)
 
-[node name="CheckPoint2" type="Node2D"]
+[node name="CheckPoint" type="Node2D"]
 position = Vector2(72, 64)
 script = ExtResource("1_77irl")
 
@@ -15,6 +15,8 @@ script = ExtResource("2_gtjsv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector"]
 shape = SubResource("RectangleShape2D_hxcxh")
+
+[node name="Marker2D" type="Marker2D" parent="."]
 
 [connection signal="body_entered" from="PlayerDetector" to="PlayerDetector" method="_on_body_entered"]
 [connection signal="player_detected" from="PlayerDetector" to="." method="_on_player_detector_player_detected"]

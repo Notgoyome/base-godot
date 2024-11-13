@@ -28,7 +28,7 @@ func _process(delta: float) -> void:
 	pass
 
 
-func _on_player_detector_player_detected(body: Node2D) -> void:
+func _on_player_detector_player_detected(body: Player) -> void:
 	print("Player detected")
 	Action.reload_current_scene()
 	pass # Replace with function body.

@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://bmoy5tjd4u66a"]
+
+[ext_resource type="Script" path="res://rigid/bouncer.gd" id="1_0huib"]
+[ext_resource type="PackedScene" uid="uid://dogthltcnehvs" path="res://utils/player_detector.tscn" id="1_uwsj6"]
+[ext_resource type="Texture2D" uid="uid://bhpm5a0k8ijso" path="res://assets/rigid/bounce.png" id="2_hmqoj"]
+
+[node name="Bouncer" type="Node2D"]
+script = ExtResource("1_0huib")
+
+[node name="PlayerDetector" parent="." instance=ExtResource("1_uwsj6")]
+position = Vector2(0, -2)
+
+[node name="Bounce" type="Sprite2D" parent="."]
+position = Vector2(4, 4)
+texture = ExtResource("2_hmqoj")
+
+[connection signal="player_detected" from="PlayerDetector" to="." method="_on_player_detector_player_detected"]

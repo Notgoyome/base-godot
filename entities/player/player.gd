@@ -3,10 +3,12 @@ extends CharacterBody2D
 class_name Player
 
 # movement
-@export var acceleration = 300
-@export var friction = 500
-@export var max_speed = 80
-var actual_max_speed = max_speed
+@export var acceleration = 800
+@export var friction = 10
+@export var air_friction = 10
+@export var ground_friction = 500
+@export var max_speed = 100
+var actual_max_speed = 0
 
 var can_move = true
 var has_acceleration = true
@@ -30,13 +32,20 @@ var is_falling = false
 var can_climb = false
 var request_climb = false
 var hold : Hold = null
-@export var climb_stamina = 100.0
+@export var max_climb_stamina = 100.0
+var climb_stamina = 100.0
 
 # animation
 @onready var animated_sprite: AnimatedSprite2D = $Animation
 
 #jump buffer
 @onready var jump_buffer : JumpBufferComponent = $JumpBufferComponent
+
+func _ready() -> void:
+	platform_on_leave = PLATFORM_ON_LEAVE_ADD_VELOCITY
+	# platform_on_leave = PLATFORM_ON_LEAVE_ADD_VELOCITY
+	actual_max_speed = max_speed
+	pass
 
 # Main physics process
 func _physics_process(delta: float) -> void: ### SKOTCH !!! SEPARER LES FONCTIONS EN COMPONENTS
@@ -45,7 +54,11 @@ func _physics_process(delta: float) -> void: ### SKOTCH !!! SEPARER LES FONCTION
 	apply_movement(delta, input_vector)
 	apply_gravity(delta)
 	handle_jump()
-	move_and_slide()
+	var res = move_and_slide()
+	for i in range(get_slide_collision_count()):
+		var node = get_slide_collision(i).get_collider()
+		if node.has_method("trigger"):
+			node.trigger()
 
 
 func _process(delta: float) -> void:
@@ -75,15 +88,27 @@ func update_sprite_direction(input_vector: Vector2) -> void:
 
 # Apply movement acceleration or friction
 func apply_movement(delta: float, input_vector: Vector2) -> void:
-	if can_move:
+	if can_move and input_vector != Vector2.ZERO:
 		if has_acceleration:
-			velocity.x = velocity.move_toward(input_vector * actual_max_speed, acceleration * delta).x
-		else:
-			velocity.x = input_vector.x * actual_max_speed
+			var new_x = velocity.move_toward(input_vector * actual_max_speed, acceleration * delta).x
+
+			if sign(input_vector.x) != sign(velocity.x): # ssi le joueur se retourne
+				velocity.x = new_x
+			if abs(new_x) > abs(velocity.x): # evite que le joueur se ralentisse lui meme en avançant dans la meme direction
+				velocity.x = new_x
+				
+			if is_on_floor():
+				velocity.x = new_x
+
+		# else:
+		# 	velocity.x = input_vector.x * actual_max_speed
 		is_moving = true
 	if input_vector == Vector2.ZERO:
-		if has_friction and can_jump and jump_buffer.jump_requested == false:
+		if has_friction and jump_buffer.jump_requested == false:
+			print(velocity)
 			velocity.x = velocity.move_toward(Vector2.ZERO, friction * delta).x
+			if velocity != Vector2.ZERO:
+				print(velocity, friction * delta)
 		is_moving = false
 
 # Handle jumping logic
@@ -91,6 +116,7 @@ func handle_jump() -> void:
 	if can_jump and jump_buffer.jump_requested:
 		velocity.y = jump_velocity
 		jump_buffer.jump_requested = false
+		velocity.x -= get_platform_velocity().x * 0.2
 	if Input.is_action_just_released("jump") and velocity.y < 0:
 		velocity.y *= 0.5
 
