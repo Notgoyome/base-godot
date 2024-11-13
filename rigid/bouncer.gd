@@ -22,6 +22,5 @@ func _on_player_detector_player_detected(player:Player):
 	pass # Replace with function body.
 
 func trigger():
-	print("triggered")
 	if get_parent().has_method("trigger"):
 		get_parent().trigger()

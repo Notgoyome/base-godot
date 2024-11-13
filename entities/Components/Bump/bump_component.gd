@@ -10,7 +10,6 @@ func _on_area_2d_body_entered(body:Node2D) -> void:
         var state_machine : StateMachine = body.get_node("StateMachine")
         if state_machine.current_state.name.to_lower() == "dash":
             body.velocity.y = -bump_force * reaction_force
-            print(body.velocity.y)
         else:
             body.velocity.y = -bump_force
         state_machine.on_state_transition(state_machine.current_state, "ground")

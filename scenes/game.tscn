@@ -4,10 +4,10 @@
 [ext_resource type="TileSet" uid="uid://cdpfmsvft0hro" path="res://assets/tileset.tres" id="2_pjinc"]
 [ext_resource type="PackedScene" uid="uid://bftrxlm0jj8e1" path="res://rigid/hold_medium.tscn" id="3_uxpnu"]
 [ext_resource type="PackedScene" uid="uid://bhfg1btolqofi" path="res://rigid/hold_large.tscn" id="4_gnuex"]
-[ext_resource type="PackedScene" uid="uid://dkcqt64fs72og" path="res://utils/check_point.tscn" id="5_2acof"]
+[ext_resource type="PackedScene" uid="uid://clvp13lpmv7kg" path="res://utils/check_point.tscn" id="5_2acof"]
 [ext_resource type="PackedScene" uid="uid://ersdgygcyhie" path="res://rigid/spike.tscn" id="6_4tekb"]
-[ext_resource type="PackedScene" uid="uid://dg6y7uayxqhoy" path="res://scenes/room.tscn" id="7_42uj3"]
-[ext_resource type="PackedScene" uid="uid://cppbtebdabnv8" path="res://scenes/rooms/room1.tscn" id="8_euj7h"]
+[ext_resource type="PackedScene" uid="uid://bl4c8m1c8darn" path="res://scenes/room.tscn" id="7_42uj3"]
+[ext_resource type="PackedScene" uid="uid://cpag37ia8b37m" path="res://scenes/rooms/room1.tscn" id="8_euj7h"]
 [ext_resource type="PackedScene" uid="uid://bsyrub6n7x3r6" path="res://entities/player/player.tscn" id="9_hfcmr"]
 [ext_resource type="Script" path="res://entities/player/stamina_debug.gd" id="10_ubrn4"]
 
@@ -163,10 +163,9 @@ position = Vector2(144, 128)
 position = Vector2(1104, 0)
 script = null
 
-[node name="Player" parent="." groups=["player"] instance=ExtResource("9_hfcmr")]
+[node name="Player" parent="." instance=ExtResource("9_hfcmr")]
 position = Vector2(48, 104)
 collision_layer = 3
-max_speed = 100
 jump_time = 0.6
 fall_time = 0.5
 

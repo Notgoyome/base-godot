@@ -17,6 +17,10 @@ var is_moving = false
 
 var input_vector = Vector2.ZERO
 var last_input_vector = Vector2(1, 0)
+
+# gravity
+var air_trigger = false
+
 # jump
 var jump_height: float = 32
 @export var jump_time: float = 0.3
@@ -27,6 +31,7 @@ var fall_velocity: float = (2 * jump_height) / (fall_time * fall_time)
 var can_jump = true
 var has_gravity = true
 var is_falling = false
+var is_coyote = false
 
 # CLIMB
 var can_climb = false
@@ -35,6 +40,9 @@ var hold : Hold = null
 @export var max_climb_stamina = 100.0
 var climb_stamina = 100.0
 
+# keep_velocity
+var platform_velocity = Vector2.ZERO
+
 # animation
 @onready var animated_sprite: AnimatedSprite2D = $Animation
 
@@ -42,7 +50,11 @@ var climb_stamina = 100.0
 @onready var jump_buffer : JumpBufferComponent = $JumpBufferComponent
 
 func _ready() -> void:
-	platform_on_leave = PLATFORM_ON_LEAVE_ADD_VELOCITY
+	Engine.time_scale = 1
+
+	#platform_on_leave = PLATFORM_ON_LEAVE_ADD_VELOCITY
+	
+	#platform_on_leave = PLATFORM_ON_LEAVE_DO_NOTHING
 	# platform_on_leave = PLATFORM_ON_LEAVE_ADD_VELOCITY
 	actual_max_speed = max_speed
 	pass
@@ -55,10 +67,33 @@ func _physics_process(delta: float) -> void: ### SKOTCH !!! SEPARER LES FONCTION
 	apply_gravity(delta)
 	handle_jump()
 	var res = move_and_slide()
+
+	#permet d'éviter le double velocity bug, le bloc donne la vélocité puis push le joueur, donc 2x velocity
+	#SKOTCH SCOTCH, le probleme étant, que si on est sur une platforme plus rapide que soit ,
+	# et que l'on tombe de la platforme,la platforme nous donne sa vélocitié, 
+	# mais si elle parvient a nous rattraper elle nous donne encore sa vélocité
+	if get_platform_velocity() != Vector2.ZERO:
+		platform_velocity = get_platform_velocity()
+	
+	elif platform_velocity != Vector2.ZERO and get_platform_velocity() == Vector2.ZERO:
+		if max_speed + abs(platform_velocity.x) < abs(velocity.x): # limit to player speed and platform speed
+			velocity.x = max_speed * input_vector.x + platform_velocity.x
+			platform_velocity = Vector2.ZERO
+
+
+
+
 	for i in range(get_slide_collision_count()):
 		var node = get_slide_collision(i).get_collider()
-		if node.has_method("trigger"):
+		if node.has_method("trigger_fall"):
+			if air_trigger:
+				node.trigger_fall()
+		elif node.has_method("trigger"):
 			node.trigger()
+	if is_on_floor() and air_trigger: #scotch risky, opter pour le state?
+		air_trigger = false
+		pass
+		
 
 
 func _process(delta: float) -> void:
@@ -96,6 +131,8 @@ func apply_movement(delta: float, input_vector: Vector2) -> void:
 				velocity.x = new_x
 			if abs(new_x) > abs(velocity.x): # evite que le joueur se ralentisse lui meme en avançant dans la meme direction
 				velocity.x = new_x
+			else:
+				velocity.x = velocity.move_toward(Vector2.ZERO, friction/5 * delta).x
 				
 			if is_on_floor():
 				velocity.x = new_x
@@ -105,10 +142,8 @@ func apply_movement(delta: float, input_vector: Vector2) -> void:
 		is_moving = true
 	if input_vector == Vector2.ZERO:
 		if has_friction and jump_buffer.jump_requested == false:
-			print(velocity)
 			velocity.x = velocity.move_toward(Vector2.ZERO, friction * delta).x
-			if velocity != Vector2.ZERO:
-				print(velocity, friction * delta)
+
 		is_moving = false
 
 # Handle jumping logic
@@ -116,7 +151,10 @@ func handle_jump() -> void:
 	if can_jump and jump_buffer.jump_requested:
 		velocity.y = jump_velocity
 		jump_buffer.jump_requested = false
-		velocity.x -= get_platform_velocity().x * 0.2
+		#ONLY IF PLAYER DIDN4T LEAVE THE PLATFORM be careful of coyote timer
+		if is_coyote:
+			velocity.x -= get_platform_velocity().x * 1
+		velocity.y -= get_platform_velocity().y
 	if Input.is_action_just_released("jump") and velocity.y < 0:
 		velocity.y *= 0.5
 

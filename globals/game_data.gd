@@ -8,8 +8,6 @@ func _ready() -> void:
 	if players.size() > 0:
 		player = players[0]
 		player_respawn_point = player.global_position
-	else:
-		print("No player found in the scene")
 	pass # Replace with function body.
 
 func set_player_respawn_point(point: Vector2) -> void:

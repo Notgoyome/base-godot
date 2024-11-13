@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://rigid/spike.gd" id="1_r4kti"]
 [ext_resource type="Texture2D" uid="uid://8si70ygdc3e0" path="res://assets/spike.png" id="2_3bs2p"]
-[ext_resource type="PackedScene" uid="uid://dogthltcnehvs" path="res://utils/player_detector.tscn" id="3_0tr4u"]
+[ext_resource type="PackedScene" path="res://utils/player_detector.tscn" id="3_0tr4u"]
 
 [node name="Spike" type="Node2D"]
 script = ExtResource("1_r4kti")

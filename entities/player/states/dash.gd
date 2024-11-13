@@ -51,7 +51,6 @@ func _recover_dash() -> void:
 func reset_state() -> void:
 	dash_timer.stop()
 	player.velocity *= 0.3
-	print(player.velocity)
 	if player.is_on_floor():
 		emit_signal("state_finished", self, "ground")
 		return

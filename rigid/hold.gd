@@ -41,7 +41,6 @@ func _process(delta: float) -> void:
     pass
 
 func trigger() -> void:
-    print("triggered")
     if breakable:
         breakable_timer.start()
         shake_position(breakable_delay, 1,20, sprite)

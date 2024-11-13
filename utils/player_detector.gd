@@ -13,6 +13,7 @@ func _process(delta: float) -> void:
 
 
 func _on_body_entered(body:Node2D) -> void:
+	print("entered")
 	if body is Player:
 		emit_signal("player_detected", body)
 	pass # Replace with function body.

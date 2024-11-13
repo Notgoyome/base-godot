@@ -22,7 +22,6 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if current_state:
-		# print("Processing ", current_state.name)
 		current_state.process(delta)
 	pass
 

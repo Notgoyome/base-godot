@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://lyfdmk8hh56l"]
+[gd_scene load_steps=3 format=3 uid="uid://cfkmvtmkob07i"]
 
 [ext_resource type="PackedScene" uid="uid://cg8i2p1in6d1o" path="res://scenes/rooms/room1/room_1.tscn" id="1_278x1"]
-[ext_resource type="PackedScene" uid="uid://cvjkdawne5sbj" path="res://utils/camera_2d.tscn" id="2_dx5xe"]
+[ext_resource type="PackedScene" path="res://utils/camera_2d.tscn" id="2_dx5xe"]
 
 [node name="Node2D" type="Node2D"]
 

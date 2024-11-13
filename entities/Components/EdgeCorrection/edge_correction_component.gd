@@ -28,12 +28,10 @@ func _process(delta: float) -> void:
 
 
 func _on_air_state_finished(state: State, new_state_name: String) -> void:
-    print("false")
     set_process(false)
     pass # Replace with function body.
 
 
 func _on_air_state_enter() -> void:
-    print("true")
     set_process(true)
     pass # Replace with function body.

@@ -8,27 +8,28 @@ var old_speed = 0
 func _ready():
 	coyote_timer.wait_time = coyote_time
 	coyote_timer.one_shot = true
+	
 	coyote_timer.timeout.connect(_end_coyote)
 	add_child(coyote_timer)
 
 func enter() -> void:
+	player.air_trigger = true
 	# player.has_friction = false
 	# player.has_acceleration = false
 	player.friction = player.air_friction
-	print(player.air_friction)
 	player.has_friction = true
 	# player.acceleration = 750
 	old_speed = player.max_speed
 	player.max_speed = player.max_speed
 	if player.can_jump:
+		#player.can_jump = false
 		coyote_timer.start()
+		player.is_coyote = true
 		pass
 	update_animation()
 
 func process(delta: float) -> void:
-	print(player.has_friction)
 	if player.can_climb and player.request_climb and int(player.climb_stamina) > 0:
-		print("go", player.climb_stamina)
 		emit_signal("state_finished", self, "climbing")
 		return
 	if player.is_on_floor():
@@ -57,4 +58,5 @@ func exit() -> void:
 
 func _end_coyote() -> void:
 	player.can_jump = false
+	player.is_coyote = false
 	pass

@@ -77,4 +77,3 @@ func apply_hit() -> void:
             if player:
                 player.velocity += bump_vector
 
-        print("Hit body: ", body.name)

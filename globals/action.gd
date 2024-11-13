@@ -29,7 +29,6 @@ func reload_current_scene() -> void:
 	var players = get_tree().get_nodes_in_group("player")
 	
 	if players.size() == 0:
-		print("No player found in the scene")
 		return
 	var player = players[0]
 	player.hide()	
