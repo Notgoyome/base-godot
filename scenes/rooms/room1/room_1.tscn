@@ -14,12 +14,23 @@ position = Vector2(0, -8)
 [node name="Room2" parent="." index="1" instance=ExtResource("3_vwddx")]
 position = Vector2(320, -8)
 
-[node name="Player" parent="." index="2"]
+[node name="Room3" parent="." index="2" instance=ExtResource("3_vwddx")]
+position = Vector2(640, -8)
+
+[node name="Room4" parent="." index="3" instance=ExtResource("3_vwddx")]
+position = Vector2(960, -8)
+
+[node name="Player" parent="." index="4"]
 fall_time = 0.3
 
-[node name="AnimatableBody2D" parent="." index="3" instance=ExtResource("4_6thnv")]
+[node name="AnimatableBody2D" parent="." index="5" instance=ExtResource("4_6thnv")]
 position = Vector2(94, 80)
 constant_linear_velocity = Vector2(2.08165e-12, 2.08165e-12)
 
-[node name="Area2D" parent="." index="4" instance=ExtResource("5_s82pu")]
+[node name="Marker2D" parent="AnimatableBody2D" index="2"]
+position = Vector2(50, 0)
+
+[node name="Area2D" parent="." index="6" instance=ExtResource("5_s82pu")]
 position = Vector2(61, 75)
+
+[editable path="AnimatableBody2D"]

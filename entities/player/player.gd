@@ -92,10 +92,12 @@ func apply_movement(delta: float, input_vector: Vector2) -> void:
 		if has_acceleration:
 			var new_x = velocity.move_toward(input_vector * actual_max_speed, acceleration * delta).x
 
-			if sign(input_vector.x) != sign(velocity.x):
+			if sign(input_vector.x) != sign(velocity.x): # ssi le joueur se retourne
 				velocity.x = new_x
-
-			if abs(new_x) > abs(velocity.x):
+			if abs(new_x) > abs(velocity.x): # evite que le joueur se ralentisse lui meme en avançant dans la meme direction
+				velocity.x = new_x
+				
+			if is_on_floor():
 				velocity.x = new_x
 
 		# else:
