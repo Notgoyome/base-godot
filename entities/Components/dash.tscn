@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://beq4145njdoq1"]
-
-[ext_resource type="Script" path="res://entities/player/states/dash.gd" id="1_8v6tc"]
-
-[node name="Dash" type="Node" node_paths=PackedStringArray("player")]
-script = ExtResource("1_8v6tc")
-player = NodePath("")

@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://c5w120o6416nl"]
-
-[ext_resource type="Script" path="res://entities/Components/Coyotte/coyotte_componant.gd" id="1_jrbhl"]
-
-[node name="CoyoteComponent" type="Node"]
-script = ExtResource("1_jrbhl")

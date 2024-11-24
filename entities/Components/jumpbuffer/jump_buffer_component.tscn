@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cifsc3fj43ga2"]
-
-[ext_resource type="Script" path="res://entities/Components/jumpbuffer/jump_buffer_component.gd" id="1_td2ec"]
-
-[node name="JumpBufferComponent" type="Node"]
-script = ExtResource("1_td2ec")
